@@ -2,6 +2,7 @@ import type { Dispatch } from 'react';
 import type { GameAction, GameState } from '../game/gameReducer';
 import { TEAMS_MIN, TEAMS_MAX, ROUND_TIME_MIN, ROUND_TIME_MAX, ROUND_TIME_STEP, TARGET_SCORE_MIN, TARGET_SCORE_MAX, TARGET_SCORE_STEP, teamColor } from '../game/constants';
 import { PencilIcon } from './icons';
+import logo from '../assets/misheard-logo.png';
 
 interface SetupScreenProps {
   state: GameState;
@@ -13,13 +14,9 @@ export function SetupScreen({ state, dispatch }: SetupScreenProps) {
 
   return (
     <div className="mm-screen">
-      <div style={{ textAlign: 'left', padding: '24px 0 18px' }}>
-        <div className="mm-title" style={{ fontSize: 26, lineHeight: 1.1 }}>
-          Misheard
-          <br />
-          Music
-        </div>
-        <div className="mm-label" style={{ marginTop: 8 }}>
+      <div style={{ textAlign: 'center', padding: '24px 0 18px' }}>
+        <img src={logo} alt="Misheard" style={{ width: '100%', maxWidth: 260, height: 'auto', display: 'block', margin: '0 auto' }} />
+        <div className="mm-label" style={{ marginTop: 10 }}>
           Настройка игры
         </div>
       </div>
