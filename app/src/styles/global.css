@@ -389,7 +389,7 @@ body {
   cursor: pointer;
   color: #fff;
   overflow: hidden;
-  touch-action: pan-y;
+  touch-action: none;
   transition: transform 0.12s var(--ease-spring);
   display: grid;
   grid-template-areas: 'stack';
