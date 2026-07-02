@@ -484,12 +484,12 @@ body {
   box-shadow: 0 6px 14px rgba(26, 27, 60, 0.08);
 }
 .mm-card-back--1 {
-  background: #ded3f7;
+  background: #efeae3;
   transform: translate(9px, 11px);
   z-index: 0;
 }
 .mm-card-back--2 {
-  background: #f3ddb8;
+  background: #ded7cd;
   transform: translate(18px, 22px);
   z-index: -1;
 }
