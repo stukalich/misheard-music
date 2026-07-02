@@ -1,6 +1,6 @@
 import type { Dispatch } from 'react';
 import type { GameAction, GameState } from '../game/gameReducer';
-import { CheckIcon } from './icons';
+import { CheckIcon, ButtonArrowIcon } from './icons';
 
 interface DeckSelectScreenProps {
   state: GameState;
@@ -52,7 +52,8 @@ export function DeckSelectScreen({ state, dispatch }: DeckSelectScreenProps) {
         disabled={!canStart}
         onClick={() => dispatch({ type: 'START_GAME' })}
       >
-        {canStart ? 'Начать игру' : 'Загрузка колоды…'}
+        <span>{canStart ? 'Начать игру' : 'Загрузка колоды…'}</span>
+        {canStart && <ButtonArrowIcon />}
       </button>
     </div>
   );

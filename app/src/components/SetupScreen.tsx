@@ -1,7 +1,7 @@
 import type { Dispatch } from 'react';
 import type { GameAction, GameState } from '../game/gameReducer';
 import { TEAMS_MIN, TEAMS_MAX, ROUND_TIME_MIN, ROUND_TIME_MAX, ROUND_TIME_STEP, TARGET_SCORE_MIN, TARGET_SCORE_MAX, TARGET_SCORE_STEP, teamColor } from '../game/constants';
-import { PencilIcon } from './icons';
+import { PencilIcon, StopwatchIcon, TrophyIcon, SoundWaveIcon, ButtonArrowIcon } from './icons';
 import logo from '../assets/misheard-logo.png';
 
 interface SetupScreenProps {
@@ -16,8 +16,10 @@ export function SetupScreen({ state, dispatch }: SetupScreenProps) {
     <div className="mm-screen">
       <div style={{ textAlign: 'center', padding: '24px 0 18px' }}>
         <img src={logo} alt="Misheard" style={{ width: '100%', maxWidth: 260, height: 'auto', display: 'block', margin: '0 auto' }} />
-        <div className="mm-label" style={{ marginTop: 10 }}>
-          Настройка игры
+        <div className="mm-label-flanked" style={{ marginTop: 10 }}>
+          <SoundWaveIcon />
+          <span className="mm-label">Настройка игры</span>
+          <SoundWaveIcon flip />
         </div>
       </div>
 
@@ -25,7 +27,7 @@ export function SetupScreen({ state, dispatch }: SetupScreenProps) {
         <div>
           <div className="mm-row-between">
             <span className="mm-label">Команд</span>
-            <span className="mm-value">{state.teamsCount}</span>
+            <span className="mm-value-box">{state.teamsCount}</span>
           </div>
           <input
             type="range"
@@ -64,33 +66,41 @@ export function SetupScreen({ state, dispatch }: SetupScreenProps) {
         <div>
           <div className="mm-row-between">
             <span className="mm-label">Время на ход</span>
-            <span className="mm-value">{state.roundTime} сек</span>
+            <span className="mm-value-box">{state.roundTime} сек</span>
           </div>
-          <input
-            type="range"
-            min={ROUND_TIME_MIN}
-            max={ROUND_TIME_MAX}
-            step={ROUND_TIME_STEP}
-            value={state.roundTime}
-            style={{ marginTop: 8 }}
-            onChange={(e) => dispatch({ type: 'SET_ROUND_TIME', value: Number(e.target.value) })}
-          />
+          <div className="mm-slider-row" style={{ marginTop: 8 }}>
+            <span className="mm-label-badge">
+              <StopwatchIcon />
+            </span>
+            <input
+              type="range"
+              min={ROUND_TIME_MIN}
+              max={ROUND_TIME_MAX}
+              step={ROUND_TIME_STEP}
+              value={state.roundTime}
+              onChange={(e) => dispatch({ type: 'SET_ROUND_TIME', value: Number(e.target.value) })}
+            />
+          </div>
         </div>
 
         <div>
           <div className="mm-row-between">
             <span className="mm-label">Очков до победы</span>
-            <span className="mm-value">{state.targetScore}</span>
+            <span className="mm-value-box">{state.targetScore}</span>
           </div>
-          <input
-            type="range"
-            min={TARGET_SCORE_MIN}
-            max={TARGET_SCORE_MAX}
-            step={TARGET_SCORE_STEP}
-            value={state.targetScore}
-            style={{ marginTop: 8 }}
-            onChange={(e) => dispatch({ type: 'SET_TARGET_SCORE', value: Number(e.target.value) })}
-          />
+          <div className="mm-slider-row" style={{ marginTop: 8 }}>
+            <span className="mm-label-badge">
+              <TrophyIcon />
+            </span>
+            <input
+              type="range"
+              min={TARGET_SCORE_MIN}
+              max={TARGET_SCORE_MAX}
+              step={TARGET_SCORE_STEP}
+              value={state.targetScore}
+              onChange={(e) => dispatch({ type: 'SET_TARGET_SCORE', value: Number(e.target.value) })}
+            />
+          </div>
         </div>
       </div>
 
@@ -100,7 +110,8 @@ export function SetupScreen({ state, dispatch }: SetupScreenProps) {
         disabled={!canContinue}
         onClick={() => dispatch({ type: 'GO_TO_DECKSELECT' })}
       >
-        {canContinue ? 'Далее' : 'Загрузка…'}
+        <span>{canContinue ? 'Далее' : 'Загрузка…'}</span>
+        {canContinue && <ButtonArrowIcon />}
       </button>
     </div>
   );

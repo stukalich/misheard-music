@@ -2,6 +2,7 @@ import type { Dispatch } from 'react';
 import type { GameAction, GameState } from '../game/gameReducer';
 import { displayTeamName } from '../game/gameReducer';
 import { ScoreRow } from './ScoreRow';
+import { ButtonArrowIcon } from './icons';
 
 interface EndTurnScreenProps {
   state: GameState;
@@ -28,7 +29,8 @@ export function EndTurnScreen({ state, dispatch }: EndTurnScreenProps) {
             style={{ width: '100%' }}
             onClick={() => dispatch({ type: 'CONTINUE_AFTER_TURN' })}
           >
-            {won ? 'Смотреть результат' : 'Следующая команда'}
+            <span>{won ? 'Смотреть результат' : 'Следующая команда'}</span>
+            <ButtonArrowIcon />
           </button>
         </div>
       </div>

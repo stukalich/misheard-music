@@ -2,6 +2,7 @@ import type { Dispatch } from 'react';
 import type { GameAction, GameState } from '../game/gameReducer';
 import { displayTeamName } from '../game/gameReducer';
 import { ScoreRow } from './ScoreRow';
+import { ButtonArrowIcon } from './icons';
 
 interface PreTurnScreenProps {
   state: GameState;
@@ -26,7 +27,8 @@ export function PreTurnScreen({ state, dispatch }: PreTurnScreenProps) {
             style={{ width: '100%' }}
             onClick={() => dispatch({ type: 'START_TURN' })}
           >
-            Начать ход ({state.roundTime} сек)
+            <span>Начать ход ({state.roundTime} сек)</span>
+            <ButtonArrowIcon />
           </button>
         </div>
       </div>

@@ -9,6 +9,7 @@ import { EndTurnScreen } from './components/EndTurnScreen';
 import { WinScreen } from './components/WinScreen';
 import { PauseOverlay } from './components/PauseOverlay';
 import { ExitOverlay } from './components/ExitOverlay';
+import { BackgroundDecor } from './components/BackgroundDecor';
 import { ExitIcon } from './components/icons';
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
 
   return (
     <div className="mm-app-shell">
+      <BackgroundDecor />
       {showExit && (
         <button className="mm-exit-btn" aria-label="Назад" onClick={handleExitClick}>
           <ExitIcon />
