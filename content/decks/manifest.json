@@ -1,0 +1,25 @@
+{
+  "decks": [
+    {
+      "id": "idioms",
+      "title": "Устойчивые выражения",
+      "description": "Фразеологизмы и крылатые фразы",
+      "file": "idioms.json",
+      "color": "#6B4CE0"
+    },
+    {
+      "id": "ru-titles",
+      "title": "Русские песни",
+      "description": "Названия русских и советских хитов",
+      "file": "ru-titles.json",
+      "color": "#E24C4C"
+    },
+    {
+      "id": "foreign-titles",
+      "title": "Зарубежные песни",
+      "description": "Названия зарубежных хитов",
+      "file": "foreign-titles.json",
+      "color": "#2F8FE0"
+    }
+  ]
+}

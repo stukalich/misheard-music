@@ -1,0 +1,31 @@
+{
+  "batch": "titles-01",
+  "count": 18,
+  "note": "Зашифровано ТОЛЬКО название песни (как в оригинальной игре Misheard Music). Текст песни нигде не цитируется — только реальный артист и реальное название, это факты, а не охраняемый контент.",
+  "schema": {
+    "mis": "как слышится (фонетическая шифровка названия)",
+    "artist": "реальный исполнитель",
+    "title": "реальное название песни",
+    "difficulty": "easy | medium | hard"
+  },
+  "cards": [
+    {"mis":"Дарн Зинк Вин","artist":"ABBA","title":"Dancing Queen","difficulty":"easy"},
+    {"mis":"Бидэ","artist":"Michael Jackson","title":"Beat It","difficulty":"easy"},
+    {"mis":"Три Литра","artist":"Michael Jackson","title":"Thriller","difficulty":"medium"},
+    {"mis":"Тук В Ушко","artist":"Виктор Цой","title":"Кукушка","difficulty":"easy"},
+    {"mis":"Груша В Проруби","artist":"Виктор Цой","title":"Группа Крови","difficulty":"medium"},
+    {"mis":"Владим И Кисель Настрадал","artist":"Михаил Круг","title":"Владимирский Централ","difficulty":"hard"},
+    {"mis":"Мыл Он Алку И Розу","artist":"Алла Пугачёва","title":"Миллион Алых Роз","difficulty":"medium"},
+    {"mis":"Кочет","artist":"Земфира","title":"Хочешь","difficulty":"easy"},
+    {"mis":"Хот Тень Калифорния","artist":"Eagles","title":"Hotel California","difficulty":"medium"},
+    {"mis":"Ви Вил Рок Ю","artist":"Queen","title":"We Will Rock You","difficulty":"easy"},
+    {"mis":"Смэлс Лайк Тин Спирт","artist":"Nirvana","title":"Smells Like Teen Spirit","difficulty":"hard"},
+    {"mis":"Питер Пить","artist":"Ленинград","title":"В Питере Пить","difficulty":"medium"},
+    {"mis":"Айс Берег","artist":"Алла Пугачёва","title":"Айсберг","difficulty":"easy"},
+    {"mis":"Свезла По Имени Сольце","artist":"Виктор Цой","title":"Звезда По Имени Солнце","difficulty":"hard"},
+    {"mis":"Летс Ит Би","artist":"The Beatles","title":"Let It Be","difficulty":"easy"},
+    {"mis":"Мани Мани Мани","artist":"ABBA","title":"Money, Money, Money","difficulty":"easy"},
+    {"mis":"Ай Вил Сервайв","artist":"Gloria Gaynor","title":"I Will Survive","difficulty":"medium"},
+    {"mis":"Бохимиан Раз По Дым","artist":"Queen","title":"Bohemian Rhapsody","difficulty":"hard"}
+  ]
+}

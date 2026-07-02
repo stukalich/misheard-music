@@ -1,0 +1,31 @@
+{
+  "batch": "foreign-titles-01",
+  "count": 18,
+  "note": "Зашифровано ТОЛЬКО название песни зарубежных исполнителей. Текст песни нигде не цитируется — только реальный артист и реальное название, это факты, а не охраняемый контент. mis — русская фонетическая шифровка звучания оригинального названия.",
+  "schema": {
+    "mis": "как слышится (фонетическая шифровка названия)",
+    "artist": "реальный исполнитель",
+    "title": "реальное название песни",
+    "difficulty": "easy | medium | hard"
+  },
+  "cards": [
+    {"mis":"Дарн Зинк Вин","artist":"ABBA","title":"Dancing Queen","difficulty":"easy"},
+    {"mis":"Бидэ","artist":"Michael Jackson","title":"Beat It","difficulty":"easy"},
+    {"mis":"Три Литра","artist":"Michael Jackson","title":"Thriller","difficulty":"medium"},
+    {"mis":"Хот Тень Калифорния","artist":"Eagles","title":"Hotel California","difficulty":"medium"},
+    {"mis":"Ви Вил Рок Ю","artist":"Queen","title":"We Will Rock You","difficulty":"easy"},
+    {"mis":"Смэлс Лайк Тин Спирт","artist":"Nirvana","title":"Smells Like Teen Spirit","difficulty":"hard"},
+    {"mis":"Летс Ит Би","artist":"The Beatles","title":"Let It Be","difficulty":"easy"},
+    {"mis":"Мани Мани Мани","artist":"ABBA","title":"Money, Money, Money","difficulty":"easy"},
+    {"mis":"Ай Вил Сервайв","artist":"Gloria Gaynor","title":"I Will Survive","difficulty":"medium"},
+    {"mis":"Бохимиан Раз По Дым","artist":"Queen","title":"Bohemian Rhapsody","difficulty":"hard"},
+    {"mis":"Ливень Он Поймал","artist":"Bon Jovi","title":"Livin' On A Prayer","difficulty":"hard"},
+    {"mis":"Били Джина","artist":"Michael Jackson","title":"Billie Jean","difficulty":"medium"},
+    {"mis":"Дом Стоп, Мне Надо","artist":"Queen","title":"Don't Stop Me Now","difficulty":"medium"},
+    {"mis":"Есть Тут Дед","artist":"The Beatles","title":"Yesterday","difficulty":"medium"},
+    {"mis":"Тайком Помяу","artist":"a-ha","title":"Take On Me","difficulty":"medium"},
+    {"mis":"Айда За Тайгой","artist":"Survivor","title":"Eye Of The Tiger","difficulty":"easy"},
+    {"mis":"А, При Всех","artist":"Toto","title":"Africa","difficulty":"hard"},
+    {"mis":"Шерри, Шерри, Лей-ка","artist":"Modern Talking","title":"Cheri Cheri Lady","difficulty":"medium"}
+  ]
+}

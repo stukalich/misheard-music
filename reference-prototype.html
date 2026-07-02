@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misheard Music — прототип v5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#EDEDE9; min-height:100vh; display:flex; align-items:center; justify-content:center; }
+
+  #mm-outer {
+    --ink:#0D0D0D; --paper:#F7F6F2; --card-back:#2F5FE0; --muted:#E4E1D8; --accent:#2F5FE0;
+    --font-display: 'Inter', -apple-system, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    --ease-spring: cubic-bezier(.34,1.56,.64,1);
+    font-family: var(--font-body);
+    width: 360px; margin: 24px auto;
+  }
+  #mm-outer * { box-sizing: border-box; }
+
+  @media (prefers-reduced-motion: reduce) {
+    #mm-outer, #mm-outer * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+  }
+
+  #mm-phone {
+    width: 100%; aspect-ratio: 9/19; position: relative;
+    border: 1px solid var(--ink); border-radius: 28px; overflow: hidden;
+    display: flex; flex-direction: column;
+    background-color: var(--paper);
+  }
+  #mm-statusbar { flex-shrink:0; height:28px; display:flex; align-items:center; justify-content:space-between; padding:0 18px; font-size:12px; font-weight:600; color:var(--ink); font-variant-numeric: tabular-nums; }
+  #mm-battery { width:19px; height:9px; border:1.5px solid var(--ink); border-radius:2px; position:relative; }
+  #mm-battery::after { content:''; position:absolute; right:-3.5px; top:2.5px; width:2px; height:4px; background:var(--ink); border-radius:0 1px 1px 0; }
+  #mm-battery::before { content:''; position:absolute; left:1.5px; top:1.5px; bottom:1.5px; width:11px; background:var(--ink); border-radius:1px; }
+  #mm-app { flex:1; overflow-y:auto; overflow-x:hidden; padding: 0 18px 16px; display:flex; flex-direction:column; }
+  #mm-home { flex-shrink:0; height:16px; display:flex; align-items:center; justify-content:center; }
+  #mm-home .bar { width:90px; height:4px; border-radius:2px; background:var(--ink); opacity:.25; }
+
+  #mm-vignette { position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity .3s ease; z-index:5; }
+
+  #mm-exit-btn {
+    display:none; position:absolute; top:32px; left:12px; z-index:15;
+    width:32px; height:32px; border-radius:50%; border:1.5px solid var(--ink); background:var(--paper);
+    align-items:center; justify-content:center; cursor:pointer; color:var(--ink);
+    transition: transform .15s var(--ease-spring);
+  }
+  #mm-exit-btn:active { transform: scale(.9); }
+
+  #mm-pause-overlay, #mm-exit-overlay {
+    display:none; position:absolute; inset:0; z-index:20;
+    background:rgba(13,13,13,.85); color:#fff;
+    align-items:center; justify-content:center; flex-direction:column; gap:16px; text-align:center; padding:0 30px;
+    animation: mm-fade-in .18s ease;
+  }
+  #mm-exit-overlay { z-index:25; }
+  @keyframes mm-fade-in { from { opacity:0 } to { opacity:1 } }
+  .mm-overlay-title { font-family: var(--font-display); font-weight:700; font-size:19px; letter-spacing:.2px; }
+  .mm-overlay-sub { font-size:12px; opacity:.75; line-height:1.5; margin-top:-8px; }
+  .mm-overlay-actions { display:flex; gap:10px; width:100%; margin-top:4px; }
+
+  .mm-topbar { flex-shrink:0; margin:0 -18px 0; padding:12px 18px 10px 52px; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .mm-team-pill { display:inline-flex; align-items:center; padding:6px 13px; border-radius:20px; font-weight:700; font-size:11px; text-transform:uppercase; letter-spacing:.6px; color:#fff; max-width:170px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; animation: mm-pop-in .3s var(--ease-spring); }
+  @keyframes mm-pop-in { from { opacity:0; transform: scale(.85) translateY(-3px); } to { opacity:1; transform: scale(1) translateY(0); } }
+  .mm-icon-btn { width:32px; height:32px; border-radius:50%; border:1.5px solid var(--ink); background:transparent; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--ink); flex-shrink:0; transition: transform .15s var(--ease-spring); }
+  .mm-icon-btn:active { transform: scale(.88); }
+
+  .mm-timer-wrap { flex-shrink:0; text-align:center; padding: 4px 0 10px; }
+  .mm-timer-num { font-family: var(--font-display); font-size:48px; font-weight:700; letter-spacing:-0.5px; color:var(--ink); line-height:1; font-variant-numeric: tabular-nums; transition: color .2s ease; }
+  .mm-timer-num.low-time { color:#E24C4C; animation: mm-pulse .7s ease-in-out infinite; }
+  @keyframes mm-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+  .mm-timer-track { height:4px; border-radius:2px; background:var(--muted); margin:12px auto 4px; overflow:hidden; }
+  .mm-timer-fill { height:100%; border-radius:2px; transition: width 1s linear, background-color .2s ease; }
+  .mm-turn-score { font-size:11px; font-weight:600; color:var(--ink); opacity:.5; text-transform:uppercase; letter-spacing:.6px; font-variant-numeric: tabular-nums; }
+
+  .mm-title { font-family: var(--font-display); font-weight:700; letter-spacing:-.2px; }
+
+  .mm-panel { background: var(--paper); border:1px solid var(--ink); border-radius:16px; padding:18px; }
+  .mm-btn {
+    font-family: var(--font-body); font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:.6px;
+    background:var(--ink); color:#fff; border:1px solid var(--ink); border-radius:12px; padding:15px 16px; cursor:pointer;
+    transition: transform .12s var(--ease-spring), opacity .1s ease;
+  }
+  .mm-btn:active { transform: scale(.97); opacity:.9; }
+  .mm-btn.ghost { background: transparent; color: var(--ink); }
+  .mm-btn.danger { background:#E24C4C; border-color:#E24C4C; }
+  .mm-btn.primary {
+    background: linear-gradient(135deg, #2F5FE0 0%, #6B4CE0 100%);
+    border-color: transparent;
+  }
+
+  .mm-chip { border:1px solid var(--ink); border-radius:12px; padding:8px; text-align:center; background:var(--paper); animation: mm-pop-in .28s var(--ease-spring) backwards; }
+  .mm-chip.active { background: var(--ink); color:#fff; }
+
+  .mm-row-between { display:flex; justify-content:space-between; align-items:baseline; }
+
+  .mm-stack { position:relative; margin: 6px 4px 0; }
+  .mm-card-back { position:absolute; inset:0; border-radius:20px; background: var(--muted); }
+  .mm-card-back.b1 { transform: rotate(3deg) translate(0,4px); z-index:0; }
+  .mm-card {
+    position:relative; z-index:2; border-radius:20px; box-shadow: 0 12px 28px rgba(0,0,0,.18);
+    user-select:none; cursor:pointer; color:#fff; overflow:hidden;
+    transition: transform .12s var(--ease-spring);
+  }
+  .mm-card.pressing { transform: scale(.98); }
+  .mm-face { position:absolute; top:24px; left:22px; right:22px; text-align:left; }
+
+  #mm-app input[type=range] { -webkit-appearance:none; width:100%; height:3px; background:var(--ink); outline:none; }
+  #mm-app input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--ink); cursor:pointer; transition: transform .12s var(--ease-spring); }
+  #mm-app input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
+
+  .mm-team-row { position:relative; display:flex; align-items:center; gap:10px; background:var(--muted); border-radius:12px; padding:2px 12px; margin-bottom:8px; border:1.5px solid transparent; transition: border-color .12s ease, background .12s ease; }
+  .mm-team-row:focus-within { border-color: var(--accent); background:#fff; }
+  .mm-team-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+  .mm-team-row input[type=text] { font-family: var(--font-body); border:none; background:transparent; padding:11px 0; width:100%; color:var(--ink); font-weight:600; font-size:14px; outline:none; }
+  .mm-team-pencil { opacity:.35; flex-shrink:0; color:var(--ink); }
+
+  .mm-label { font-size:11px; text-transform:uppercase; letter-spacing:1px; font-weight:700; opacity:.55; }
+  .mm-value { font-size:14px; font-weight:800; color:var(--ink); font-variant-numeric: tabular-nums; }
+  .mm-rule { border:none; border-top:1px solid rgba(255,255,255,.35); margin:12px 0; }
+
+  .mm-legend { min-height:96px; display:flex; flex-direction:column; justify-content:flex-start; margin-top:18px; }
+  .mm-legend-hint { text-align:center; font-size:10px; margin:0 0 14px; text-transform:uppercase; letter-spacing:.5px; color:var(--ink); opacity:.5; }
+  .mm-legend-row { display:flex; justify-content:center; align-items:center; gap:28px; }
+  .mm-legend-side { display:flex; align-items:center; gap:10px; }
+  .mm-icon-badge { width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:22px; color:#fff; flex-shrink:0; cursor:pointer; border:none; transition: transform .15s var(--ease-spring); }
+  .mm-icon-badge:active { transform: scale(.85); }
+</style>
+</head>
+<body>
+
+<div id="mm-outer">
+  <div id="mm-phone">
+    <div id="mm-statusbar"><span>9:41</span><span id="mm-battery"></span></div>
+    <button id="mm-exit-btn" aria-label="В меню">
+      <svg width="14" height="14" viewBox="0 0 16 16"><path d="M10 2 L4 8 L10 14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div id="mm-app"></div>
+    <div id="mm-home"><div class="bar"></div></div>
+    <div id="mm-vignette"></div>
+
+    <div id="mm-pause-overlay">
+      <div class="mm-overlay-title">Пауза</div>
+      <button id="resume-btn" class="mm-btn" style="background:#fff;color:var(--ink);border-color:#fff">Продолжить</button>
+    </div>
+
+    <div id="mm-exit-overlay">
+      <div class="mm-overlay-title">Выйти в меню?</div>
+      <div class="mm-overlay-sub">Текущая игра и весь счёт будут потеряны</div>
+      <div class="mm-overlay-actions">
+        <button id="exit-cancel-btn" class="mm-btn ghost" style="flex:1;color:#fff;border-color:#fff">Отмена</button>
+        <button id="exit-confirm-btn" class="mm-btn danger" style="flex:1">Выйти</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const CARDS = [
+    {mis:"Мама, я лечу, дай мне ключ", real:"Малиновый рассвет над рекой", artist:"Огни Заката", title:"Малиновый Рассвет"},
+    {mis:"Дайте кофе, дядя Толя пьёт", real:"Дай мне знак, что ты ещё жива", artist:"Ночной Трамвай", title:"Дай Мне Знак"},
+    {mis:"Вот и лето, вот и лето, а зимы больше нет", real:"Погода в доме была так себе", artist:"Дачники", title:"Погода В Доме"},
+    {mis:"Он украл мой чемодан, чемодан, чемодан", real:"Ты меня совсем не бережёшь", artist:"Южный Экспресс", title:"Не Бережёшь"},
+    {mis:"Сидоров стучит в окно, окно, окно", real:"Снег летит, кружится над двором", artist:"Северный Ветер", title:"Снег Кружится"},
+    {mis:"Я тебя слепила из того, что было, а потом влюбилась", real:"Собрала его из хлама и любви", artist:"Малина Band", title:"Из Того, Что Было"},
+    {mis:"Батарея, батарея, всё горячее и горячее", real:"Осень греет тише, чем весна", artist:"Городской Джаз", title:"Тише, Чем Весна"},
+    {mis:"Дай мне руку, дай мне ногу, дай мне пятое число", real:"Half of my heart glows in the moonlight", artist:"Paper Owls", title:"Half The Moon"},
+    {mis:"Вышел ёжик из тумана, вынул ножик из кармана", real:"Центральный вокзал, поезд в темноте", artist:"Тюремный Блюз", title:"Ночной Централ"},
+    {mis:"Ну постой, ну постой, я в аптеку за тобой", real:"Ну постой, не грусти, всё пройдёт", artist:"Дворовые Ребята", title:"Ну Постой"},
+    {mis:"Крылатые качели летят, летят, летят, а я в них не сижу", real:"Крылатые качели несут меня в мечту", artist:"Детская Карусель", title:"Крылатые Качели"},
+    {mis:"Позови меня тихо по имени, разбуди среди ночи и щей налей", real:"Позови меня тихо по имени, растревожь тишину", artist:"Ночная Птица", title:"Позови Тихо"}
+  ];
+  const TEAM_COLORS = ['#E24C4C','#E0A72F','#1FA97A','#6B4CE0','#D6316C','#2F8FE0'];
+  const ANSWER_BLUE = '#2F5FE0';
+  const INK = '#0D0D0D';
+  const CORRECT_COLOR = '#1FA97A';
+  const WRONG_COLOR = '#E24C4C';
+  const LOW_TIME_THRESHOLD = 10;
+
+  let teamsCount = 3, roundTime = 45, targetScore = 20;
+  let teamNames = ['Команда 1','Команда 2','Команда 3'];
+  let scores = [], turnIndex = 0, timeLeft = 0, timerId = null, paused = false, pausedByExitModal = false;
+  let deck = [], deckPos = 0, turnScore = 0;
+  let currentCard = null, flipped = false, hasRevealed = false;
+  let screenState = 'setup';
+
+  const app = document.getElementById('mm-app');
+  const vignette = document.getElementById('mm-vignette');
+  const pauseOverlay = document.getElementById('mm-pause-overlay');
+  const exitOverlay = document.getElementById('mm-exit-overlay');
+  const exitBtn = document.getElementById('mm-exit-btn');
+
+  document.getElementById('resume-btn').onclick = resumeTimer;
+
+  exitBtn.onclick = () => {
+    pausedByExitModal = !paused && timerId !== null;
+    if(pausedByExitModal){ clearInterval(timerId); }
+    exitOverlay.style.display = 'flex';
+  };
+  document.getElementById('exit-cancel-btn').onclick = () => {
+    exitOverlay.style.display = 'none';
+    if(pausedByExitModal){ timerId = setInterval(tick, 1000); pausedByExitModal = false; }
+  };
+  document.getElementById('exit-confirm-btn').onclick = () => {
+    clearInterval(timerId);
+    paused = false; pausedByExitModal = false;
+    exitOverlay.style.display = 'none';
+    pauseOverlay.style.display = 'none';
+    renderSetup();
+  };
+
+  function setScreenState(state){
+    screenState = state;
+    exitBtn.style.display = (state === 'setup') ? 'none' : 'flex';
+  }
+
+  function flashVignette(correct){
+    vignette.style.background = correct
+      ? `radial-gradient(ellipse at center, transparent 40%, ${CORRECT_COLOR} 170%)`
+      : `radial-gradient(ellipse at center, transparent 40%, ${WRONG_COLOR} 170%)`;
+    vignette.style.opacity = '1';
+    setTimeout(()=>{ vignette.style.opacity = '0'; }, 300);
+  }
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]]=[a[j],a[i]];
+    }
+    return a;
+  }
+
+  function syncTeamNames(){
+    while(teamNames.length < teamsCount) teamNames.push('Команда ' + (teamNames.length+1));
+    teamNames.length = teamsCount;
+  }
+
+  function renderTeamInputs(){
+    syncTeamNames();
+    const wrap = document.getElementById('team-names-wrap');
+    wrap.innerHTML = teamNames.map((name,i)=>`
+      <div class="mm-team-row">
+        <span class="mm-team-dot" style="background:${TEAM_COLORS[i % TEAM_COLORS.length]}"></span>
+        <input type="text" data-idx="${i}" class="team-name-input" value="${name}" placeholder="Команда ${i+1}" maxlength="20">
+        <span class="mm-team-pencil">
+          <svg width="14" height="14" viewBox="0 0 16 16"><path d="M11 2 L14 5 L5 14 L2 14 L2 11 Z" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linejoin="round"/></svg>
+        </span>
+      </div>
+    `).join('');
+    wrap.querySelectorAll('.team-name-input').forEach(inp=>{
+      inp.oninput = (e)=>{
+        const i = +e.target.dataset.idx;
+        teamNames[i] = e.target.value.trim() || ('Команда ' + (i+1));
+      };
+    });
+  }
+
+  function arrowSVG(color, flip){
+    return `<svg width="30" height="24" viewBox="0 0 70 56" style="display:block${flip ? ';transform:scaleX(-1)':''}">
+      <path d="M8 48 C 20 20, 40 10, 58 10" stroke="${color}" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path d="M44 4 L60 10 L52 26" stroke="${color}" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`;
+  }
+
+  function pauseIconSVG(){
+    return `<svg width="13" height="13" viewBox="0 0 16 16"><rect x="3" y="2" width="3.2" height="12" rx="1" fill="currentColor"/><rect x="9.8" y="2" width="3.2" height="12" rx="1" fill="currentColor"/></svg>`;
+  }
+
+  function renderSetup(){
+    setScreenState('setup');
+    syncTeamNames();
+    app.innerHTML = `
+      <div style="text-align:left;padding:24px 0 18px">
+        <div class="mm-title" style="font-size:26px;line-height:1.1;color:var(--ink)">Misheard<br>Music</div>
+        <div class="mm-label" style="margin-top:8px">Настройка игры</div>
+      </div>
+
+      <div class="mm-panel" style="display:flex;flex-direction:column;gap:18px;margin-bottom:14px">
+        <div>
+          <div class="mm-row-between"><span class="mm-label">Команд</span><span class="mm-value" id="tc-out">${teamsCount}</span></div>
+          <input type="range" id="tc" min="2" max="8" step="1" value="${teamsCount}" style="margin-top:8px">
+        </div>
+        <div>
+          <div class="mm-label" style="margin-bottom:7px">Названия команд</div>
+          <div id="team-names-wrap"></div>
+        </div>
+        <div>
+          <div class="mm-row-between"><span class="mm-label">Время на ход</span><span class="mm-value" id="rt-out">${roundTime} сек</span></div>
+          <input type="range" id="rt" min="20" max="90" step="5" value="${roundTime}" style="margin-top:8px">
+        </div>
+        <div>
+          <div class="mm-row-between"><span class="mm-label">Очков до победы</span><span class="mm-value" id="ts-out">${targetScore}</span></div>
+          <input type="range" id="ts" min="10" max="50" step="5" value="${targetScore}" style="margin-top:8px">
+        </div>
+      </div>
+
+      <button id="start-btn" class="mm-btn primary" style="width:100%">Начать игру</button>
+    `;
+    renderTeamInputs();
+    document.getElementById('tc').oninput = e => {
+      teamsCount = +e.target.value;
+      document.getElementById('tc-out').textContent = teamsCount;
+      renderTeamInputs();
+    };
+    document.getElementById('rt').oninput = e => { roundTime = +e.target.value; document.getElementById('rt-out').textContent = roundTime + ' сек'; };
+    document.getElementById('ts').oninput = e => { targetScore = +e.target.value; document.getElementById('ts-out').textContent = targetScore; };
+    document.getElementById('start-btn').onclick = () => {
+      syncTeamNames();
+      scores = Array(teamsCount).fill(0);
+      turnIndex = 0;
+      deck = shuffle(CARDS);
+      deckPos = 0;
+      renderPreTurn();
+    };
+  }
+
+  function scoreRow(){
+    return `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">
+      ${scores.map((s,i)=>`<div class="mm-chip ${i===turnIndex?'active':''}" style="flex:1;min-width:70px;animation-delay:${i*40}ms">
+        <div class="mm-label" style="opacity:${i===turnIndex?'.85':'.5'};color:inherit;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${teamNames[i]}</div>
+        <div style="font-size:17px;font-weight:800;font-variant-numeric:tabular-nums">${s}</div>
+      </div>`).join('')}
+    </div>`;
+  }
+
+  function renderPreTurn(){
+    setScreenState('preturn');
+    app.innerHTML = `
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+        ${scoreRow()}
+        <div class="mm-panel" style="text-align:left">
+          <div class="mm-label">Ход команды</div>
+          <div class="mm-title" style="font-size:22px;margin:8px 0 10px;color:var(--ink)">${teamNames[turnIndex]}</div>
+          <p style="font-size:12px;line-height:1.5;margin:0 0 16px;color:var(--ink);opacity:.65">Игрок 1 читает ослышку ровным голосом, не подпевая. Игрок 2 угадывает вслух. Дальше — только жесты.</p>
+          <button id="go-btn" class="mm-btn primary" style="width:100%">Начать ход (${roundTime} сек)</button>
+        </div>
+      </div>
+    `;
+    document.getElementById('go-btn').onclick = startTurn;
+  }
+
+  function nextCard(){
+    if(deckPos >= deck.length){ deck = shuffle(CARDS); deckPos = 0; }
+    currentCard = deck[deckPos++];
+    flipped = false;
+    hasRevealed = false;
+  }
+
+  function startTurn(){
+    turnScore = 0;
+    timeLeft = roundTime;
+    paused = false;
+    nextCard();
+    renderTurn();
+    timerId = setInterval(tick, 1000);
+  }
+
+  function tick(){
+    timeLeft--;
+    updateTimerUI();
+    if(timeLeft<=0){ clearInterval(timerId); endTurn(); }
+  }
+
+  function updateTimerUI(){
+    const t = document.getElementById('timer-out');
+    if(t){
+      t.textContent = timeLeft;
+      t.classList.toggle('low-time', timeLeft > 0 && timeLeft <= LOW_TIME_THRESHOLD);
+    }
+    const bar = document.getElementById('timer-bar-fill');
+    if(bar){
+      bar.style.width = Math.max(0, (timeLeft/roundTime*100)) + '%';
+      bar.style.backgroundColor = (timeLeft <= LOW_TIME_THRESHOLD) ? WRONG_COLOR : '';
+    }
+  }
+
+  function pauseTimer(){
+    if(paused) return;
+    paused = true;
+    clearInterval(timerId);
+    pauseOverlay.style.display = 'flex';
+  }
+
+  function resumeTimer(){
+    if(!paused) return;
+    paused = false;
+    pauseOverlay.style.display = 'none';
+    timerId = setInterval(tick, 1000);
+  }
+
+  function faceHTML(isMis){
+    if(isMis){
+      return `<div class="mm-label" style="color:#fff;opacity:.6;margin-bottom:10px">КАК СЛЫШИТСЯ</div>
+        <div style="font-size:19px;font-weight:800;line-height:1.28">${currentCard.mis}</div>`;
+    }
+    return `<div class="mm-label" style="color:#fff;opacity:.6;margin-bottom:10px">НА САМОМ ДЕЛЕ ЭТО</div>
+      <div style="font-size:19px;font-weight:800;line-height:1.28">${currentCard.real}</div>
+      <hr class="mm-rule">
+      <div style="font-size:13px;font-weight:700;color:#fff;opacity:.85">${currentCard.artist}</div>
+      <div style="font-size:12px;font-weight:500;color:#fff;opacity:.6">${currentCard.title}</div>`;
+  }
+
+  function fixCardHeight(){
+    const card = document.getElementById('card');
+    const faceMis = document.getElementById('face-mis');
+    const faceReal = document.getElementById('face-real');
+    if(!card || !faceMis || !faceReal) return;
+    card.style.height = 'auto';
+    const hMis = faceMis.offsetHeight;
+    const hReal = faceReal.offsetHeight;
+    const maxH = Math.max(hMis, hReal);
+    card.style.height = (maxH + 48) + 'px';
+  }
+
+  function renderTurn(){
+    setScreenState('turn');
+    const teamColor = TEAM_COLORS[turnIndex % TEAM_COLORS.length];
+    const cardBg = flipped ? ANSWER_BLUE : INK;
+    const pct = Math.max(0, (timeLeft/roundTime*100));
+    const isLow = timeLeft > 0 && timeLeft <= LOW_TIME_THRESHOLD;
+
+    app.innerHTML = `
+      <div class="mm-topbar">
+        <span class="mm-team-pill" style="background:${teamColor}" title="${teamNames[turnIndex]}">${teamNames[turnIndex]}</span>
+        <button id="pause-btn" class="mm-icon-btn" aria-label="Пауза">${pauseIconSVG()}</button>
+      </div>
+
+      <div class="mm-timer-wrap">
+        <div class="mm-timer-num${isLow?' low-time':''}" id="timer-out">${timeLeft}</div>
+        <div class="mm-timer-track"><div class="mm-timer-fill" id="timer-bar-fill" style="width:${pct}%;background-color:${isLow?WRONG_COLOR:teamColor}"></div></div>
+        <div class="mm-turn-score">Очки хода: <span id="turn-score">${turnScore>=0?'+':''}${turnScore}</span></div>
+      </div>
+
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+        <div class="mm-stack">
+          <div class="mm-card-back b1"></div>
+          <div id="card" class="mm-card" style="background:${cardBg}">
+            <div class="mm-face" id="face-mis" style="opacity:${!flipped?1:0}">${faceHTML(true)}</div>
+            <div class="mm-face" id="face-real" style="opacity:${flipped?1:0}">${faceHTML(false)}</div>
+          </div>
+        </div>
+
+        <div class="mm-legend" style="opacity:${hasRevealed?1:0};pointer-events:${hasRevealed?'auto':'none'};transition:opacity .15s ease">
+          <p class="mm-legend-hint">Нажми ещё раз, чтобы перевернуть обратно</p>
+          <div class="mm-legend-row">
+            <div class="mm-legend-side">
+              ${arrowSVG(INK, true)}
+              <button class="mm-icon-badge" id="wrong-badge" style="background:${WRONG_COLOR}">✗</button>
+            </div>
+            <div class="mm-legend-side">
+              <button class="mm-icon-badge" id="right-badge" style="background:${CORRECT_COLOR}">✓</button>
+              ${arrowSVG(INK, false)}
+            </div>
+          </div>
+        </div>
+        ${!hasRevealed ? `<p class="mm-legend-hint" style="margin-top:18px">Тапни карточку, чтобы увидеть ответ</p>` : ''}
+      </div>
+    `;
+
+    fixCardHeight();
+    attachCardGestures(document.getElementById('card'));
+    document.getElementById('pause-btn').onclick = pauseTimer;
+    const wrongBadge = document.getElementById('wrong-badge');
+    const rightBadge = document.getElementById('right-badge');
+    if(wrongBadge) wrongBadge.onclick = ()=> { if(!hasRevealed) return; flashVignette(false); advance(false); };
+    if(rightBadge) rightBadge.onclick = ()=> { if(!hasRevealed) return; flashVignette(true); advance(true); };
+  }
+
+  function attachCardGestures(cardEl){
+    let dragState = null;
+    cardEl.style.touchAction = 'none';
+
+    cardEl.addEventListener('pointerdown', (e)=>{
+      if(paused) return;
+      dragState = {startX:e.clientX, dx:0, moved:false};
+      if(cardEl.setPointerCapture){ try{ cardEl.setPointerCapture(e.pointerId); }catch(err){} }
+      cardEl.style.transition = 'none';
+      cardEl.classList.add('pressing');
+    });
+
+    cardEl.addEventListener('pointermove', (e)=>{
+      if(!dragState) return;
+      dragState.dx = e.clientX - dragState.startX;
+      if(Math.abs(dragState.dx) > 6) dragState.moved = true;
+      if(hasRevealed){
+        const clampedDx = Math.max(-160, Math.min(160, dragState.dx));
+        const rot = clampedDx/16;
+        cardEl.style.transform = `translateX(${clampedDx}px) rotate(${rot}deg)`;
+      }
+    });
+
+    const end = ()=>{
+      if(!dragState) return;
+      const dx = dragState.dx;
+      cardEl.classList.remove('pressing');
+      cardEl.style.transition = 'transform .2s var(--ease-spring)';
+
+      if(hasRevealed && dx > 90){
+        flashVignette(true);
+        cardEl.style.transform = `translateX(260px) rotate(16deg)`;
+        cardEl.style.opacity = '0';
+        setTimeout(()=>advance(true), 130);
+      } else if(hasRevealed && dx < -90){
+        flashVignette(false);
+        cardEl.style.transform = `translateX(-260px) rotate(-16deg)`;
+        cardEl.style.opacity = '0';
+        setTimeout(()=>advance(false), 130);
+      } else if(!dragState.moved){
+        flipped = !flipped;
+        hasRevealed = true;
+        renderTurn();
+      } else {
+        cardEl.style.transform = '';
+      }
+      dragState = null;
+    };
+
+    cardEl.addEventListener('pointerup', end);
+    cardEl.addEventListener('pointercancel', end);
+  }
+
+  function advance(correct){
+    turnScore += correct ? 1 : -1;
+    if(timeLeft<=0 || paused) return;
+    nextCard();
+    renderTurn();
+  }
+
+  function endTurn(){
+    setScreenState('endturn');
+    scores[turnIndex] = Math.max(0, scores[turnIndex] + turnScore);
+    const won = scores[turnIndex] >= targetScore;
+    app.innerHTML = `
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+        ${scoreRow()}
+        <div class="mm-panel">
+          <div class="mm-label">Время вышло</div>
+          <div class="mm-title" style="font-size:19px;margin:8px 0 16px;color:var(--ink)">${teamNames[turnIndex]}: ${turnScore>=0?'+':''}${turnScore} ${Math.abs(turnScore)===1?'очко':'очков'}</div>
+          <button id="cont-btn" class="mm-btn primary" style="width:100%">${won ? 'Смотреть результат' : 'Следующая команда'}</button>
+        </div>
+      </div>
+    `;
+    document.getElementById('cont-btn').onclick = ()=>{
+      if(won){ renderWin(); return; }
+      turnIndex = (turnIndex+1) % teamsCount;
+      renderPreTurn();
+    };
+  }
+
+  function renderWin(){
+    setScreenState('win');
+    const maxScore = Math.max(...scores);
+    const winners = scores.map((s,i)=>({s,i})).filter(x=>x.s===maxScore);
+    app.innerHTML = `
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+        <div class="mm-label">Игра окончена</div>
+        <div class="mm-title" style="font-size:22px;margin:8px 0 16px;line-height:1.25;color:var(--ink)">
+          ${winners.length>1 ? 'Ничья: ' + winners.map(w=>teamNames[w.i]).join(', ') : 'Победила «' + teamNames[winners[0].i] + '»'}
+        </div>
+        ${scoreRow()}
+        <button id="again-btn" class="mm-btn ghost" style="width:100%;border:1px solid var(--ink)">Играть заново</button>
+      </div>
+    `;
+    document.getElementById('again-btn').onclick = renderSetup;
+  }
+
+  renderSetup();
+})();
+</script>
+</body>
+</html>

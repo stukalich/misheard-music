@@ -1,0 +1,10 @@
+.DS_Store
+.claude/settings.local.json
+
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+tools/.misheard_lexicon.pkl
+tools/__pycache__/
