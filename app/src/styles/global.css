@@ -474,22 +474,23 @@ body {
 
 .mm-stack {
   position: relative;
-  margin: 12px 10px 0;
+  margin: 6px 24px 24px 6px;
 }
 .mm-card-back {
   position: absolute;
   inset: 0;
   border-radius: 20px;
   z-index: 0;
+  box-shadow: 0 6px 14px rgba(26, 27, 60, 0.08);
 }
 .mm-card-back--1 {
-  background: var(--muted);
-  transform: rotate(4deg) translate(3px, 8px);
+  background: #ded3f7;
+  transform: translate(9px, 11px);
   z-index: 0;
 }
 .mm-card-back--2 {
-  background: #e6dfe8;
-  transform: rotate(-5deg) translate(-4px, 14px);
+  background: #f3ddb8;
+  transform: translate(18px, 22px);
   z-index: -1;
 }
 .mm-card {
