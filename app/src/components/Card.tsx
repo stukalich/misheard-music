@@ -108,7 +108,8 @@ export function Card({ cardSeq, card, flipped, hasRevealed, disabled, onFlip, on
 
   return (
     <div className="mm-stack">
-      <div className="mm-card-back" />
+      <div className="mm-card-back mm-card-back--2" />
+      <div className="mm-card-back mm-card-back--1" />
       <div
         key={cardSeq}
         ref={cardRef}
