@@ -116,6 +116,32 @@ export function ButtonArrowIcon() {
   );
 }
 
+export function ShareIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M8 1.5 V10" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+      <path d="M5 4.2 L8 1.2 L11 4.2" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M4 7 H3.2 C2.5 7 2 7.5 2 8.2 V13 C2 13.7 2.5 14.2 3.2 14.2 H12.8 C13.5 14.2 14 13.7 14 13 V8.2 C14 7.5 13.5 7 12.8 7 H12"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        fill="none"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+export function DownloadIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M8 1.5 V10" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+      <path d="M5 7 L8 10.3 L11 7" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M2.5 12.5 H13.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function SwipeArrowIcon({ color, flip }: { color: string; flip?: boolean }) {
   return (
     <svg

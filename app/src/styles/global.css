@@ -367,6 +367,54 @@ body {
   box-shadow: var(--shadow-soft);
 }
 
+.mm-install-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--paper-soft);
+  border-radius: 16px;
+  padding: 10px 10px 10px 14px;
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+.mm-install-banner svg {
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+.mm-install-text {
+  flex: 1;
+  font-size: 11.5px;
+  line-height: 1.4;
+  opacity: 0.75;
+}
+.mm-install-btn {
+  flex-shrink: 0;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 8px 14px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.mm-install-close {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  opacity: 0.4;
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
 .mm-btn {
   display: inline-flex;
   align-items: center;

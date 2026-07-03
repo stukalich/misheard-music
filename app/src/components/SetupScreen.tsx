@@ -2,6 +2,7 @@ import type { Dispatch } from 'react';
 import type { GameAction, GameState } from '../game/gameReducer';
 import { TEAMS_MIN, TEAMS_MAX, ROUND_TIME_MIN, ROUND_TIME_MAX, ROUND_TIME_STEP, TARGET_SCORE_MIN, TARGET_SCORE_MAX, TARGET_SCORE_STEP, teamColor } from '../game/constants';
 import { PencilIcon, StopwatchIcon, TrophyIcon, SoundWaveIcon, ButtonArrowIcon } from './icons';
+import { InstallBanner } from './InstallBanner';
 import logo from '../assets/misheard-logo.png';
 
 interface SetupScreenProps {
@@ -22,6 +23,8 @@ export function SetupScreen({ state, dispatch }: SetupScreenProps) {
           <SoundWaveIcon flip />
         </div>
       </div>
+
+      <InstallBanner />
 
       <div className="mm-panel" style={{ display: 'flex', flexDirection: 'column', gap: 18, marginBottom: 14 }}>
         <div>
