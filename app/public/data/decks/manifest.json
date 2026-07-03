@@ -20,6 +20,41 @@
       "description": "Названия зарубежных хитов",
       "file": "foreign-titles.json",
       "color": "#2F8FE0"
+    },
+    {
+      "id": "ru-pop",
+      "title": "Русский поп",
+      "description": "Самые известные поп-хиты",
+      "file": "ru-pop.json",
+      "color": "#E0A72F"
+    },
+    {
+      "id": "ru-rap",
+      "title": "Русский рэп",
+      "description": "RnB Club, Melon Music и другая классика",
+      "file": "ru-rap.json",
+      "color": "#1FA97A"
+    },
+    {
+      "id": "world-classics",
+      "title": "Мировая классика",
+      "description": "Хиты, которые знают все",
+      "file": "world-classics.json",
+      "color": "#D6316C"
+    },
+    {
+      "id": "proverbs",
+      "title": "Пословицы и поговорки",
+      "description": "Народная мудрость",
+      "file": "proverbs.json",
+      "color": "#C97B2E"
+    },
+    {
+      "id": "memes",
+      "title": "Мемы",
+      "description": "Русские и снг-мемы",
+      "file": "memes.json",
+      "color": "#3EC6E0"
     }
   ]
 }

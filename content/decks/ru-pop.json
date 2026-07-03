@@ -1,0 +1,33 @@
+{
+  "batch": "ru-pop-01",
+  "count": 20,
+  "note": "Популярные хиты русской поп-сцены. Зашифровано ТОЛЬКО название — факты об артисте/названии, не текст песни.",
+  "schema": {
+    "mis": "как слышится (фонетическая шифровка названия)",
+    "artist": "реальный исполнитель",
+    "title": "реальное название песни",
+    "difficulty": "easy | medium | hard"
+  },
+  "cards": [
+    {"mis":"Лайк","artist":"Zivert","title":"Life","difficulty":"easy"},
+    {"mis":"Вишня","artist":"Нюша","title":"Выше","difficulty":"easy"},
+    {"mis":"Панамки грёзы","artist":"Клава Кока","title":"Пьяные Слёзы","difficulty":"medium"},
+    {"mis":"Люби мышка","artist":"NILETTO","title":"Любимка","difficulty":"easy"},
+    {"mis":"Голос так","artist":"Егор Крид","title":"Холостяк","difficulty":"easy"},
+    {"mis":"Не в бокале ли морожено","artist":"Дима Билан","title":"Невозможное Возможно","difficulty":"hard"},
+    {"mis":"Тапки в лоб","artist":"Сергей Лазарев","title":"Так Просто","difficulty":"medium"},
+    {"mis":"У Аиды красная слива","artist":"Ани Лорак","title":"Уходи Красиво","difficulty":"medium"},
+    {"mis":"Чайники","artist":"Валерия","title":"Часики","difficulty":"easy"},
+    {"mis":"Ай да я","artist":"Инстасамка","title":"Атата","difficulty":"easy"},
+    {"mis":"От пуза чаю","artist":"MakSim","title":"Отпускаю","difficulty":"medium"},
+    {"mis":"Сума с ежами","artist":"Мот","title":"Сумасшедшая","difficulty":"medium"},
+    {"mis":"Розовый Винни","artist":"Элджей & Feduk","title":"Розовое Вино","difficulty":"easy"},
+    {"mis":"Не за будкой","artist":"Anna Asti","title":"Незабудка","difficulty":"easy"},
+    {"mis":"Про овёс","artist":"Ёлка","title":"Прованс","difficulty":"easy"},
+    {"mis":"О, да, качество!","artist":"Слава","title":"Одиночество","difficulty":"medium"},
+    {"mis":"Самый лучший пень","artist":"Григорий Лепс","title":"Самый Лучший День","difficulty":"easy"},
+    {"mis":"Ты Саша, красиво","artist":"Наргиз","title":"Ты Так Красива","difficulty":"easy"},
+    {"mis":"Плавает деверь в томате","artist":"Валерий Меладзе","title":"Плачет Девушка В Автомате","difficulty":"hard"},
+    {"mis":"Не решать вопрос","artist":"Дискотека Авария","title":"Не Вешать Нос","difficulty":"medium"}
+  ]
+}

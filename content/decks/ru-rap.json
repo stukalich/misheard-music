@@ -1,0 +1,33 @@
+{
+  "batch": "ru-rap-01",
+  "count": 20,
+  "note": "Самое известное и цитируемое из русского рэпа (RnB Club, Melon Music и не только). Зашифровано ТОЛЬКО название — факты об артисте/названии, не текст песни.",
+  "schema": {
+    "mis": "как слышится (фонетическая шифровка названия)",
+    "artist": "реальный исполнитель",
+    "title": "реальное название песни",
+    "difficulty": "easy | medium | hard"
+  },
+  "cards": [
+    {"mis":"Горы под подушкой","artist":"Oxxxymiron","title":"Город Под Подошвой","difficulty":"medium"},
+    {"mis":"Перепел, где ты?","artist":"Oxxxymiron","title":"Переплетено","difficulty":"hard"},
+    {"mis":"Косой Андрей","artist":"Miyagi & Andy Panda","title":"Kosandra","difficulty":"medium"},
+    {"mis":"Изо рта нет","artist":"Скриптонит","title":"Иностранец","difficulty":"medium"},
+    {"mis":"Кот, Ваня","artist":"Каспийский Груз","title":"Кальян","difficulty":"easy"},
+    {"mis":"Юбка есть","artist":"Джарахов","title":"Юность","difficulty":"easy"},
+    {"mis":"Ты найдёшь пельмень","artist":"ЛСП","title":"Ты Найдёшь Меня","difficulty":"easy"},
+    {"mis":"Кот и лак","artist":"MORGENSHTERN","title":"Cadillac","difficulty":"easy"},
+    {"mis":"Сам с сарая","artist":"Баста","title":"Сансара","difficulty":"medium"},
+    {"mis":"Батон возвращается","artist":"Гуф","title":"Батя Возвращается","difficulty":"easy"},
+    {"mis":"Мятлик","artist":"T-Fest","title":"Медляк","difficulty":"medium"},
+    {"mis":"Гнил и лай","artist":"Face","title":"Гниль","difficulty":"medium"},
+    {"mis":"Розовый фантик","artist":"Пабло","title":"Розовый Пантер","difficulty":"easy"},
+    {"mis":"Панам Вера","artist":"Big Baby Tape","title":"Panamera","difficulty":"medium"},
+    {"mis":"Мокрые крысы","artist":"Feduk","title":"Мокрые Кроссы","difficulty":"easy"},
+    {"mis":"Кучи","artist":"OG Buda","title":"Гуччи","difficulty":"easy"},
+    {"mis":"Мосток, ва!","artist":"Тимати & Григорий Лепс","title":"Москва","difficulty":"medium"},
+    {"mis":"Плащ, плащ","artist":"Face","title":"Плак-Плак","difficulty":"easy"},
+    {"mis":"Пенальти","artist":"Хаски","title":"Панелька","difficulty":"medium"},
+    {"mis":"Пьяная корова","artist":"Каспийский Груз","title":"Пьяная Любовь","difficulty":"easy"}
+  ]
+}
