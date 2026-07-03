@@ -60,16 +60,18 @@ export function TurnScreen({ state, dispatch }: TurnScreenProps) {
       </div>
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 18px' }}>
-        <Card
-          cardSeq={state.cardSeq}
-          card={state.currentCard}
-          flipped={state.flipped}
-          hasRevealed={state.hasRevealed}
-          disabled={state.paused || state.exitModalOpen}
-          onFlip={() => dispatch({ type: 'FLIP_CARD' })}
-          onFeedback={flashVignette}
-          onAdvance={handleAdvance}
-        />
+        <div style={{ marginTop: 56 }}>
+          <Card
+            cardSeq={state.cardSeq}
+            card={state.currentCard}
+            flipped={state.flipped}
+            hasRevealed={state.hasRevealed}
+            disabled={state.paused || state.exitModalOpen}
+            onFlip={() => dispatch({ type: 'FLIP_CARD' })}
+            onFeedback={flashVignette}
+            onAdvance={handleAdvance}
+          />
+        </div>
 
         <div className="mm-legend-zone">
           <p className="mm-legend-hint" style={{ margin: 0, opacity: state.hasRevealed ? 0 : 1 }}>

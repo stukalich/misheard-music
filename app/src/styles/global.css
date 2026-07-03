@@ -2,8 +2,8 @@
   --ink: #1a1b3c;
   --paper: #ffffff;
   --paper-soft: #ffffff;
-  --bg-gradient: linear-gradient(160deg, #fdf1f2 0%, #f7f0fb 55%, #f1eefc 100%);
-  --bg-solid: #f1eefc;
+  --bg-gradient: linear-gradient(160deg, #faf1f5 0%, #f7f0fb 50%, #f3eefc 100%);
+  --bg-solid: #f7f0fb;
   --card-back: #2f5fe0;
   --muted: #fbeee6;
   --accent: #7c5cfa;
@@ -277,11 +277,19 @@ body::before {
 
 .mm-topbar {
   flex-shrink: 0;
-  padding: calc(env(safe-area-inset-top) + 14px) 18px 10px 62px;
-  display: flex;
-  justify-content: space-between;
+  padding: calc(env(safe-area-inset-top) + 14px) 18px 10px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: 8px;
+  column-gap: 8px;
+}
+.mm-topbar > .mm-team-pill {
+  grid-column: 2;
+  justify-self: center;
+}
+.mm-topbar > .mm-icon-btn {
+  grid-column: 3;
+  justify-self: end;
 }
 .mm-team-pill {
   display: inline-flex;
@@ -478,6 +486,7 @@ body::before {
   color: var(--ink);
   border-color: var(--paper-soft);
   box-shadow: var(--shadow-soft);
+  margin-top: 14px;
 }
 .mm-btn.mm-btn--danger {
   background: var(--wrong);
@@ -487,6 +496,7 @@ body::before {
   background: var(--ink);
   border-color: var(--ink);
   box-shadow: 0 12px 22px rgba(124, 92, 250, 0.35);
+  margin-top: 14px;
 }
 .mm-btn.mm-btn--inverse {
   background: #fff;
