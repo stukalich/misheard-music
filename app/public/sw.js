@@ -1,4 +1,4 @@
-const CACHE_NAME = 'misheard-v1';
+const CACHE_NAME = 'misheard-v2';
 
 self.addEventListener('install', () => {
   self.skipWaiting();
@@ -17,16 +17,16 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) return;
 
+  // Network-first: this app is under active iteration, so a fresh load
+  // should always win when online. Cache only backs up the offline case.
   event.respondWith(
-    caches.open(CACHE_NAME).then(async (cache) => {
-      const cached = await cache.match(request);
-      const network = fetch(request)
-        .then((response) => {
-          if (response.ok) cache.put(request, response.clone());
-          return response;
-        })
-        .catch(() => cached);
-      return cached || network;
-    }),
+    fetch(request)
+      .then((response) => {
+        if (response.ok) {
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, response.clone()));
+        }
+        return response;
+      })
+      .catch(() => caches.open(CACHE_NAME).then((cache) => cache.match(request))),
   );
 });

@@ -10,7 +10,7 @@
   --coral: #ff5a73;
   --correct: #1fa97a;
   --wrong: #e24c4c;
-  --shadow-soft: 0 10px 24px rgba(26, 27, 60, 0.1);
+  --shadow-soft: 0 4px 14px rgba(26, 27, 60, 0.06);
   --shadow-glow: 0 8px 18px rgba(124, 92, 250, 0.4);
   --radius-lg: 26px;
   --radius-pill: 999px;
@@ -577,37 +577,41 @@ body {
 }
 .mm-face {
   grid-area: stack;
-  padding: 24px 22px;
+  padding: 34px 28px;
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: left;
   transition: opacity 0.15s ease;
 }
 .mm-face-label {
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: 700;
   color: #fff;
   opacity: 0.6;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .mm-face-main {
-  font-size: 19px;
+  font-size: 23px;
   font-weight: 800;
   line-height: 1.28;
 }
 .mm-rule {
   border: none;
   border-top: 1px solid rgba(255, 255, 255, 0.35);
-  margin: 12px 0;
+  margin: 14px 0;
 }
 .mm-face-artist {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   color: #fff;
   opacity: 0.85;
 }
 .mm-face-title {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   color: #fff;
   opacity: 0.6;
@@ -774,7 +778,7 @@ input[type='range']::-moz-range-thumb {
   overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   margin: 0 0 18px;
   padding: 6px 2px;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
