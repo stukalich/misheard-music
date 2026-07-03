@@ -3,6 +3,7 @@
   --paper: #ffffff;
   --paper-soft: #ffffff;
   --bg-gradient: linear-gradient(160deg, #fdf1f2 0%, #f7f0fb 55%, #f1eefc 100%);
+  --bg-solid: #fdf1f2;
   --card-back: #2f5fe0;
   --muted: #fbeee6;
   --accent: #7c5cfa;
@@ -29,7 +30,8 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: var(--bg-gradient);
+  background-color: var(--bg-solid);
+  background-image: var(--bg-gradient);
   height: 100%;
   height: -webkit-fill-available;
   overflow: hidden;
@@ -54,7 +56,8 @@ body::before {
   content: '';
   position: fixed;
   inset: -10vh -10vw;
-  background: var(--bg-gradient);
+  background-color: var(--bg-solid);
+  background-image: var(--bg-gradient);
   z-index: -1;
 }
 
@@ -64,7 +67,8 @@ body::before {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: var(--bg-gradient);
+  background-color: var(--bg-solid);
+  background-image: var(--bg-gradient);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -87,7 +91,8 @@ body::before {
   max-width: 480px;
   margin: 0 auto;
   overflow: hidden;
-  background: var(--bg-gradient);
+  background-color: var(--bg-solid);
+  background-image: var(--bg-gradient);
 }
 
 .mm-screen {
