@@ -15,7 +15,7 @@ export function SetupScreen({ state, dispatch }: SetupScreenProps) {
 
   return (
     <div className="mm-screen">
-      <div style={{ textAlign: 'center', padding: '24px 0 18px' }}>
+      <div style={{ textAlign: 'center', padding: '24px 0 18px', flexShrink: 0 }}>
         <img src={logo} alt="Misheard" style={{ width: '100%', maxWidth: 260, height: 'auto', display: 'block', margin: '0 auto' }} />
         <div className="mm-label-flanked" style={{ marginTop: 10 }}>
           <SoundWaveIcon />
@@ -26,7 +26,8 @@ export function SetupScreen({ state, dispatch }: SetupScreenProps) {
 
       <InstallBanner />
 
-      <div className="mm-panel" style={{ display: 'flex', flexDirection: 'column', gap: 18, marginBottom: 14 }}>
+      <div className="mm-setup-scroll">
+      <div className="mm-panel" style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
         <div>
           <div className="mm-row-between">
             <span className="mm-label">Команд</span>
@@ -106,10 +107,11 @@ export function SetupScreen({ state, dispatch }: SetupScreenProps) {
           </div>
         </div>
       </div>
+      </div>
 
       <button
         className="mm-btn mm-btn--primary"
-        style={{ width: '100%' }}
+        style={{ width: '100%', flexShrink: 0 }}
         disabled={!canContinue}
         onClick={() => dispatch({ type: 'GO_TO_DECKSELECT' })}
       >

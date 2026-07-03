@@ -30,7 +30,9 @@ body {
   margin: 0;
   padding: 0;
   background: var(--bg-gradient);
-  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 body {
@@ -41,9 +43,10 @@ body {
 }
 
 #root {
-  min-height: 100dvh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -64,8 +67,8 @@ body {
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
-  min-height: 100dvh;
-  overflow-x: hidden;
+  height: 100dvh;
+  overflow: hidden;
   background: var(--bg-gradient);
 }
 
@@ -73,8 +76,10 @@ body {
   position: relative;
   z-index: 1;
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   padding: calc(env(safe-area-inset-top) + 18px) calc(env(safe-area-inset-right) + 18px)
     calc(env(safe-area-inset-bottom) + 18px) calc(env(safe-area-inset-left) + 18px);
 }
@@ -367,10 +372,20 @@ body {
   box-shadow: var(--shadow-soft);
 }
 
+.mm-setup-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  margin-bottom: 14px;
+}
+
 .mm-install-banner {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
   background: var(--paper-soft);
   border-radius: 16px;
   padding: 10px 10px 10px 14px;
@@ -749,10 +764,24 @@ input[type='range']::-moz-range-thumb {
   justify-content: center;
 }
 
+.mm-deck-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 0 18px;
+  padding: 2px;
+}
+
 .mm-deck-option {
   display: flex;
   align-items: center;
   gap: 14px;
+  flex-shrink: 0;
   width: 100%;
   text-align: left;
   font-family: var(--font-body);

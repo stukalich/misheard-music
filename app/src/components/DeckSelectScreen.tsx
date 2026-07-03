@@ -12,7 +12,7 @@ export function DeckSelectScreen({ state, dispatch }: DeckSelectScreenProps) {
 
   return (
     <div className="mm-screen mm-screen--with-exit">
-      <div style={{ textAlign: 'left', padding: '0 0 18px' }}>
+      <div style={{ textAlign: 'left', padding: '0 0 18px', flexShrink: 0 }}>
         <div className="mm-title" style={{ fontSize: 22 }}>
           Выбери колоду
         </div>
@@ -21,7 +21,7 @@ export function DeckSelectScreen({ state, dispatch }: DeckSelectScreenProps) {
         </div>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 18 }}>
+      <div className="mm-deck-list">
         {state.decks.map((deck) => {
           const active = deck.id === state.selectedDeckId;
           return (
@@ -48,7 +48,7 @@ export function DeckSelectScreen({ state, dispatch }: DeckSelectScreenProps) {
 
       <button
         className="mm-btn mm-btn--primary"
-        style={{ width: '100%' }}
+        style={{ width: '100%', flexShrink: 0 }}
         disabled={!canStart}
         onClick={() => dispatch({ type: 'START_GAME' })}
       >
