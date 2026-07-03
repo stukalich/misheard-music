@@ -42,6 +42,21 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/*
+ * iOS standalone (home-screen) mode sometimes reports a visual viewport
+ * that's a few pixels short at the bottom (home-indicator safe area),
+ * leaving a sliver of the WebView's default white background showing
+ * no matter how #root itself is sized. This oversized fixed layer sits
+ * behind everything and guarantees there's gradient under any such gap.
+ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -10vh -10vw;
+  background: var(--bg-gradient);
+  z-index: -1;
+}
+
 #root {
   position: fixed;
   inset: 0;
